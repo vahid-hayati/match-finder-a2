@@ -1,0 +1,33 @@
+div {
+    // background: palegoldenrod;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    form {
+        // background: gray;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        padding: 1rem;
+        margin: 1rem;
+        border: solid 4px black;
+        border-radius: 8px;
+    }
+
+    //     .item-1 {
+    //         // background: gray;
+    //         display: flex;
+    //         flex-direction: column;
+    //     }
+
+    .item-2 {
+        // background: yellowgreen;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+}
