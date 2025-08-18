@@ -84,7 +84,7 @@ export class AppComponent {
         age: this.AgeCtrl.value,
         password: this.PasswordCtrl.value,
         confirmPassword: this.ConfirmPasswordCtrl.value,
-        gender: this.GenderCtrl.value,
+          gender: this.GenderCtrl.value,
         city: this.CityCtrl.value,
         country: this.CountryCtrl.value
       }
