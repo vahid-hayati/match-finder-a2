@@ -33,6 +33,9 @@ builder.Services.AddCors(options =>
 #endregion Cors
 
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 builder.Services.AddControllers();
 

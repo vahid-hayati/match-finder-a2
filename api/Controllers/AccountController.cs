@@ -36,55 +36,6 @@ public class AccountController(IAccountRepository accountRepository) : Controlle
         return loggedInDto;
     }
 
-    [HttpGet("get-all")]
-    public async Task<ActionResult<List<MemberDto>>> GetAll(CancellationToken cancellationToken)
-    {
-        List<AppUser>? appUsers = await accountRepository.GetAllAsync(cancellationToken);
-
-        if (appUsers is null)
-            return NoContent();
-
-        List<MemberDto> memberDtos = [];
-
-        foreach (AppUser user in appUsers)
-        {
-            MemberDto memberDto = new(
-                Email: user.Email,
-                UserName: user.UserName,
-                Age: user.Age,
-                Gender: user.Gender,
-                City: user.City,
-                Country: user.Country
-            );
-
-            memberDtos.Add(memberDto);
-        }
-
-        return memberDtos;
-    }
-
-    [HttpGet("get-by-username/{username}")]
-    public async Task<ActionResult<MemberDto?>> GetByUserName(string userName, CancellationToken cancellationToken)
-    {
-        MemberDto? memberDto = await accountRepository.GetByUserNameAsync(userName, cancellationToken);
-
-        if (memberDto is null)
-            return BadRequest("User not found");
-
-        return memberDto;
-    }
-
-    [HttpPut("update/{userId}")]
-    public async Task<ActionResult<MemberDto>> UpdateById(string userId, AppUser userInput, CancellationToken cancellationToken)
-    {
-        MemberDto? memberDto = await accountRepository.UpdateByIdAsync(userId, userInput, cancellationToken);
-
-        if (memberDto is null)
-            return BadRequest("Operation failed.");
-
-        return memberDto;
-    }
-
     [HttpDelete("delete/{userId}")]
     public async Task<ActionResult<DeleteResult>> DeleteById(string userId, CancellationToken cancellationToken)
     {
