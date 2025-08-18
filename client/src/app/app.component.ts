@@ -9,12 +9,13 @@ import { AppUser } from './models/app-user.model';
 import { Login } from './models/login.model';
 import { LoggedIn } from './models/logged-in.model';
 import { Member } from './models/member.model';
+import { AccountService } from './services/account.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     FormsModule, ReactiveFormsModule,
     MatFormField, MatInputModule, MatButtonModule
   ],
@@ -22,7 +23,7 @@ import { Member } from './models/member.model';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  http = inject(HttpClient); // post, get, put, delete
+  accountService = inject(AccountService);
   fB = inject(FormBuilder);
   userResponse: LoggedIn | undefined;
   error: string | undefined;
@@ -77,9 +78,6 @@ export class AppComponent {
   //#endregion
 
   register(): void {
-    if (this.PasswordCtrl.value === this.ConfirmPasswordCtrl.value) {
-      this.arePasswordsMatch = true;
-
       let userInput: AppUser = {
         email: this.EmailCtrl.value,
         userName: this.UserNameCtrl.value,
@@ -91,96 +89,15 @@ export class AppComponent {
         country: this.CountryCtrl.value
       }
 
-      this.http.post<LoggedIn>
-        ('http://localhost:5000/api/account/register', userInput).subscribe({
-          next: (response) => {
-            console.log(response);
-            this.userResponse = response
-          },
-          error: (apiError) => {
-            this.error = apiError.error
-            console.log(apiError)
-          }
-        });
-    }
-    else {
-      this.arePasswordsMatch = false;
-    }
+      let response$: Observable<LoggedIn> =  this.accountService.register(userInput);
 
-  }
-
-  login(): void {
-    let userIn: Login = {
-      userName: this.UserNameCtrl.value,
-      password: this.PasswordCtrl.value
-    }
-
-    this.http.post('http://localhost:5000/api/account/login', userIn).subscribe({
-      next: (res) => console.log(res)
-    });
-  }
-
-  getAll(): void {
-    this.http.get<Member[]>
-      ('http://localhost:5000/api/account/get-all').subscribe({
-        next: (response) => {
-          this.users = response
-          console.log(response)
-        }
-      });
-  }
-
-  getByUserName(): void {
-    this._userIn = this.UserNameCtrl.value;
-
-    this.http.get<Member>
-      ('http://localhost:5000/api/account/get-by-username/' + this._userIn).subscribe({
+      response$.subscribe({
         next: (res) => {
-          console.log(res);
-          this.member = res
+          this.userResponse = res;
         },
-        error: (apiError) => {
-          console.log(apiError.error)
-          this.error = apiError.error
+        error: (err) => {
+          this.error = err.error;
         }
-      });
-  }
-
-  updateUserById(): void {
-    let userInput: AppUser = {
-      email: this.EmailCtrl.value,
-      userName: this.UserNameCtrl.value,
-      age: this.AgeCtrl.value,
-      password: this.PasswordCtrl.value,
-      confirmPassword: this.ConfirmPasswordCtrl.value,
-      gender: this.GenderCtrl.value,
-      city: this.CityCtrl.value,
-      country: this.CountryCtrl.value
-    }
-
-    this.http.put<Member>
-      ('http://localhost:5000/api/account/update-by-id/6862bc3f1245f9f24d26beb7', userInput).subscribe({
-        next: (res) => {
-          console.log(res)
-          this.member = res
-        }
-      });
-
-    // this.http.put<Member>
-    //   ('http://localhost:5000/api/account/update-by-id/6862bcba1245f9f24d26beb9', userInput).subscribe({
-    //     next: (res) => {
-    //       console.log(res);
-    //       this.member = res;
-    //     },
-    //     error: (apiError) => {
-    //       console.log(apiError.error);
-    //       this.error = apiError.error;
-    //     }
-    //   });
-  }
-
-  deleteUserById(): void {
-    this.http.delete
-      ('http://localhost:5000/api/account/delete/689ca1237c19f708b3960cd1 ').subscribe();
+      })
   }
 }
