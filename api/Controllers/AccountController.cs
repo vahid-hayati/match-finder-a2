@@ -20,7 +20,7 @@ public class AccountController(IAccountRepository accountRepository) : Controlle
         LoggedInDto? loggedInDto = await accountRepository.RegisterAsync(userInput, cancellationToken);
 
         if (loggedInDto is null)
-            return BadRequest("This email is already taken.");
+            return BadRequest("This user name is already taken.");
 
         return Ok(loggedInDto);
     }

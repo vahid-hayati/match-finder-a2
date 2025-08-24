@@ -56,7 +56,7 @@ public class AccountRepository : IAccountRepository
 
         return loggedRes;
     }
-    
+
     public async Task<DeleteResult?> DeleteByIdAsync(string userId, CancellationToken cancellationToken)
     {
         AppUser appUser = await _collection.Find<AppUser>(doc => doc.Id == userId).FirstOrDefaultAsync(cancellationToken);
