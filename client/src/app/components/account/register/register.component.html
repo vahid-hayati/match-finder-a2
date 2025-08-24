@@ -1,1 +1,62 @@
-<p>register works!</p>
+<div>
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" [formControl]="EmailCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input type="text" [formControl]="UserNameCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Age</mat-label>
+            <input type="number" [formControl]="AgeCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" [formControl]="PasswordCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input type="password" [formControl]="ConfirmPasswordCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+            <input type="text" [formControl]="GenderCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <input type="text" [formControl]="CityCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <input type="text" [formControl]="CountryCtrl" matInput>
+        </mat-form-field>
+
+        <button (click)="register()" mat-raised-button>Register</button>
+        <!-- <button (click)="login()" mat-raised-button>Login</button> -->
+    </form>
+
+    <p>
+        {{userResponse?.userName}}
+        {{userResponse?.age}}
+    </p>
+
+    <p>
+        {{error}}
+    </p>
+
+    <div class="item-2">
+        <!-- <button (click)="getAll()" mat-raised-button>Get All</button>
+        <button (click)="getByUserName()" mat-raised-button>Get By UserName</button>
+        <button (click)="updateUserById()" mat-raised-button>Update</button>
+        <button (click)="deleteUserById()" mat-raised-button color="warn">Delete</button> -->
+    </div>
+</div>
