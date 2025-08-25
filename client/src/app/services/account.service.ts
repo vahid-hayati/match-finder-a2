@@ -19,6 +19,8 @@ export class AccountService {
   }
 
   login(userInput: Login): Observable<LoggedIn> {
+    console.log('ok', userInput);
+    
     let response$: Observable<LoggedIn> = this.http.post<LoggedIn>('http://localhost:5000/api/account/login', userInput);
 
     return response$;

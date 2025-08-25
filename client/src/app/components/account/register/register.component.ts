@@ -7,13 +7,13 @@ import { AppUser } from '../../../models/app-user.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    RouterModule,
+    RouterModule, RouterLink,
     FormsModule, ReactiveFormsModule, MatFormFieldModule,
     MatButtonModule, MatInputModule
   ],

@@ -1,1 +1,15 @@
-<p>login works!</p>
+<div>
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label>User Name</mat-label>
+            <!-- <label>User Name</label> -->
+            <input type="text" [formControl]="UserNameCtrl" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" [formControl]="PasswordCtrl" matInput>
+        </mat-form-field>
+
+        <button (click)="login()" mat-flat-button>Login</button>
+    </form>
+</div>
