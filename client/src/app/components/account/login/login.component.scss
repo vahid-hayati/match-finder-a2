@@ -1,19 +1,36 @@
-div {
-    // background-color: gray;
+.item-1 {
+    // background-color: plum;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    padding: 0.5rem;
 
-    form {
+    form{
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        gap: 6px;
-        margin: 1rem;
-        padding: 1rem;
-        border: 4px black solid;
-        border-radius: 8px;
+        padding: 2rem;
+        gap: 1rem;
+        border: 4px solid black;
+        border-radius: 12px;
     }
 }
+
+/*
+.item-1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+
+        form {
+            padding: 2rem;
+            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 4px solid black;    
+            border-radius: 12px;
+        }
+    }
+*/

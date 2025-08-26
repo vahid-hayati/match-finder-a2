@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AccountService } from '../../../services/account.service';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Login } from '../../../models/login.model';
 import { Observable } from 'rxjs';
 import { LoggedIn } from '../../../models/logged-in.model';
-import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,9 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-login',
   standalone: true,
   imports: [
-    RouterModule, 
-    MatButtonModule,
-    MatFormFieldModule, ReactiveFormsModule, MatInputModule
+    RouterModule,
+    FormsModule, ReactiveFormsModule,
+    MatFormFieldModule, MatInputModule, MatButtonModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -23,12 +23,11 @@ import { MatButtonModule } from '@angular/material/button';
 export class LoginComponent {
   accountService = inject(AccountService);
   fB = inject(FormBuilder);
-  loggedInRes: LoggedIn | undefined | null;
 
   //#region loginFg
   loginFg = this.fB.group({
     userNameCtrl: ['', [Validators.required]],
-    passwordCtrl: ['', [Validators.minLength(4), Validators.maxLength(8)]]
+    passwordCtrl: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]]
   });
 
   get UserNameCtrl(): FormControl {
@@ -41,18 +40,17 @@ export class LoginComponent {
   //#endregion
 
   login(): void {
-    let userInput: Login = {
+    let userIn: Login = {
       userName: this.UserNameCtrl.value,
       password: this.PasswordCtrl.value
     }
 
-    let loginResponse$: Observable<LoggedIn | null> = this.accountService.login(userInput);
+    let loginRes$: Observable<LoggedIn | null> = this.accountService.login(userIn);
 
-    loginResponse$.subscribe({
-      next: (res => {
+    loginRes$.subscribe({
+      next: (res) => {
         console.log(res);
-        this.loggedInRes = res;
-      })
-    });
+      }
+    })
   }
 }
