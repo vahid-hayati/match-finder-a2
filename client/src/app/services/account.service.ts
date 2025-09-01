@@ -20,14 +20,14 @@ export class AccountService {
 
   login(userInput: Login): Observable<LoggedIn> {
     console.log('ok', userInput);
-    
+
     let response$: Observable<LoggedIn> = this.http.post<LoggedIn>('http://localhost:5000/api/account/login', userInput);
 
     return response$;
   }
 
   getAll(): Observable<Member[]> {
-    let response$: Observable<Member[]> = this.http.get<Member[]>('http://localhost:5000/api/account/get-all');
+    let response$: Observable<Member[]> = this.http.get<Member[]>('http://localhost:5000/api/member/get-all');
 
     return response$;
   }

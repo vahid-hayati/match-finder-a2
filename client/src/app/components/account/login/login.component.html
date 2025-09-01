@@ -11,7 +11,7 @@
             <input type="password" [formControl]="PasswordCtrl" matInput>
         </mat-form-field>
 
-        <button (click)="login()" mat-raised-button [disabled]="loginFg.invalid">
+        <button routerLink="/members/member-list" (click)="login()" mat-raised-button [disabled]="loginFg.invalid">
             Login
         </button>
     </form>
