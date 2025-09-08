@@ -1,7 +1,6 @@
 using api.DTOs;
 using api.Interfaces;
 using api.Models;
-using api.Settings;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
