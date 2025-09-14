@@ -5,6 +5,7 @@ import { AccountService } from '../../services/account.service';
 import { Member } from '../../models/member.model';
 import { Observable } from 'rxjs';
 import { Car } from '../../models/car.model';
+import { TestService } from '../../services/test.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,8 @@ import { Car } from '../../models/car.model';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  testServie = inject(TestService);
+
   name: string = '';
 
   setLocalStorage(): void {
