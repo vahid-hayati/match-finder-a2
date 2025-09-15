@@ -4,9 +4,15 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root'
 })
 export class TestService {
-  nameSig = signal("Parsa");
+  nameSig = signal<string>('Hossein');
 
-  changeName(): void {
-    this.nameSig.set("Artemis");
+  changeSignalValue(): void {
+    this.nameSig.set('Zeinab');
   }
+
+  // nameSig = signal('Parsa');
+
+  // changeName(): void {
+  //   this.nameSig.set('Artemis');
+  // }
 }

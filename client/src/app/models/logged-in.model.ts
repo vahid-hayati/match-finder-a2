@@ -1,4 +1,4 @@
-export interface LoggedIn {
+export interface LoggedInUser {
     userName: string;
     age: number;
 }

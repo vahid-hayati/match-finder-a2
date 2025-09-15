@@ -18,71 +18,34 @@ import { TestService } from '../../services/test.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  testServie = inject(TestService);
+  testService = inject(TestService);
 
-  name: string = '';
-
-  setLocalStorage(): void {
-    let car: Car = {
-      brand: 'Samand',
-      model: 'CLS 500'
-    }
-
-    localStorage.setItem('car', JSON.stringify(car));
-
-    // localStorage.setItem('name', 'Reyhane');
-  }
-
-  getValueLocalStorage(): void {
-    let name: string | null = localStorage.getItem('name');
-
-    console.log(name);
-  }
-
-  setLocalStorage2(): void {
-    localStorage.setItem('age', '26');
-  }
-
-  getNationalCode(): void {
-    let nationalCode: string | null = localStorage.getItem('nationalCode');
-
-    console.log('in', nationalCode, 'code meli shomast.');
-  }
-
-  setLocalSCopy(): void {
-    localStorage.setItem('nationalCode', '102334466775588009933');
-  }
-
-  removeOneItemOfLocalStorage(): void {
-    localStorage.removeItem('nationalCode');
-  }
-
-  clearLocalStorage(): void {
-    localStorage.clear();
-  }
-
-  getLocalStorageLength(): void {
-    let length: number = localStorage.length
-
-    console.log(length);
-  }
-
-  getLocalStorageKey(): void {
-    let key: string | null = localStorage.key(0);
-
-    console.log(key);
-  }
-
-  // name: string | null | undefined;
+  // name: string = '';
 
   // setLocalStorage(): void {
-  //   localStorage.setItem('name', 'parsa');
+  //   let car: Car = {
+  //     brand: 'Samand',
+  //     model: 'CLS 500'
+  //   }
+
+  //   localStorage.setItem('car', JSON.stringify(car));
+
+  //   // localStorage.setItem('name', 'Reyhane');
   // }
 
-  // getLocalStorage(): void {
-  //   // this.name = localStorage.getItem('name');
+  // getValueLocalStorage(): void {
   //   let name: string | null = localStorage.getItem('name');
 
   //   console.log(name);
+  // }
+
+  // setLocalStorage2(): void {
+  //   localStorage.setItem('age', '26');
+  // }
+
+  // getValueFromLocalStorage(): void {
+  //   let ageValue: string | null = localStorage.getItem('age');
+
+  //   console.log(ageValue);
   // }
 }

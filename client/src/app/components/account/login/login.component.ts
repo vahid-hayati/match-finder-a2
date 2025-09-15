@@ -4,7 +4,7 @@ import { AccountService } from '../../../services/account.service';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Login } from '../../../models/login.model';
 import { Observable } from 'rxjs';
-import { LoggedIn } from '../../../models/logged-in.model';
+import { LoggedInUser } from '../../../models/logged-in.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,7 +45,7 @@ export class LoginComponent {
       password: this.PasswordCtrl.value
     }
 
-    let loginRes$: Observable<LoggedIn | null> = this.accountService.login(userIn);
+    let loginRes$: Observable<LoggedInUser | null> = this.accountService.login(userIn);
 
     loginRes$.subscribe({
       next: (res) => {

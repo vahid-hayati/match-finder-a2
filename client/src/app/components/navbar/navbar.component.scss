@@ -8,12 +8,16 @@ mat-toolbar {
             color: white;
             text-decoration: none;
         }
+
+        h1 {
+            color: red;
+        }
     }
 
     .right {
         // background-color: green;
         display: flex;
-        gap: 6px;   
+        gap: 6px;
     }
 }
 
