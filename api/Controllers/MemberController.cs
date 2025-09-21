@@ -1,3 +1,4 @@
+using api.Controllers.Helpers;
 using api.DTOs;
 using api.Interfaces;
 using api.Models;
@@ -5,9 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class MemberController(IMemberRepository memberRepository) : ControllerBase
+public class MemberController(IMemberRepository memberRepository) : BaseApiController
 {
     [HttpGet("get-all")]
     public async Task<ActionResult<List<MemberDto>>> GetAll(CancellationToken cancellationToken)

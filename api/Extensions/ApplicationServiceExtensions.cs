@@ -27,7 +27,6 @@ public static class ApplicationServiceExtensions
         });
         #endregion MongoDbSettings
 
-
         #region Cors: baraye ta'eede Angular HttpClient requests
         services.AddCors(options =>
             {

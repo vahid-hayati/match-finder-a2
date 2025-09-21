@@ -1,3 +1,4 @@
+using api.Controllers.Helpers;
 using api.DTOs;
 using api.Interfaces;
 using api.Models;
@@ -6,9 +7,7 @@ using MongoDB.Driver;
 
 namespace api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class AccountController(IAccountRepository accountRepository) : ControllerBase
+public class AccountController(IAccountRepository accountRepository) : BaseApiController
 {
     [HttpPost("register")]
     public async Task<ActionResult<LoggedInDto>> Register(AppUser userInput, CancellationToken cancellationToken)
