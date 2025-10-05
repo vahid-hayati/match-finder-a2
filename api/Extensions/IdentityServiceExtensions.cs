@@ -25,7 +25,9 @@ public static class IdentityServiceExtensions
 
                     ValidateIssuer = false,
 
-                    ValidateAudience = false
+                    ValidateAudience = false,
+
+                    ValidateLifetime = true
                 };
             });
         }

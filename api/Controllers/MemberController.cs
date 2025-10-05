@@ -2,12 +2,14 @@ using api.Controllers.Helpers;
 using api.DTOs;
 using api.Interfaces;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
 public class MemberController(IMemberRepository memberRepository) : BaseApiController
 {
+    [Authorize]
     [HttpGet("get-all")]
     public async Task<ActionResult<List<MemberDto>>> GetAll(CancellationToken cancellationToken)
     {
