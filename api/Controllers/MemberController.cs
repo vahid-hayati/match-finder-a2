@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
+[Authorize]
 public class MemberController(IMemberRepository memberRepository) : BaseApiController
 {
-    [Authorize]
     [HttpGet("get-all")]
     public async Task<ActionResult<List<MemberDto>>> GetAll(CancellationToken cancellationToken)
     {
@@ -47,5 +47,4 @@ public class MemberController(IMemberRepository memberRepository) : BaseApiContr
 
         return memberDto;
     }
-
 }

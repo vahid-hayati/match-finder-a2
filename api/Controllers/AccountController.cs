@@ -2,6 +2,7 @@ using api.Controllers.Helpers;
 using api.DTOs;
 using api.Interfaces;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
@@ -34,6 +35,7 @@ public class AccountController(IAccountRepository accountRepository) : BaseApiCo
         return loggedInDto;
     }
 
+    [Authorize]
     [HttpDelete("delete/{userId}")]
     public async Task<ActionResult<DeleteResult>> DeleteById(string userId, CancellationToken cancellationToken)
     {

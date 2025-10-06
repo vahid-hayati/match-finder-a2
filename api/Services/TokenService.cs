@@ -33,7 +33,6 @@ public class TokenService : ITokenService
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.NameId, appUser.Id!),
-            new Claim(JwtRegisteredClaimNames.Email, appUser.Email!),
         };
 
         var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
@@ -41,7 +40,7 @@ public class TokenService : ITokenService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.Now.AddMinutes(2),
+            Expires = DateTime.Now.AddDays(7),
             SigningCredentials = creds
         };
 
