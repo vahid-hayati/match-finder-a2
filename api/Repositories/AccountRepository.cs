@@ -2,7 +2,6 @@ using api.DTOs;
 using api.Interfaces;
 using api.Models;
 using api.Settings;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace api.Repositoris;
@@ -36,11 +35,7 @@ public class AccountRepository : IAccountRepository
 
         string token = _tokenService.CreateToken(userInput);
 
-        LoggedInDto loggedInDto = new LoggedInDto(
-            UserName: userInput.UserName,
-            Age: userInput.Age,
-            Token: token
-        );
+        LoggedInDto loggedInDto = Mappers.ConvertAppUserToLoggedInDto(userInput, token);
 
         return loggedInDto;
     }
@@ -57,11 +52,7 @@ public class AccountRepository : IAccountRepository
 
         string token = _tokenService.CreateToken(appUser);
 
-        LoggedInDto loggedInDto = new LoggedInDto(
-            UserName: appUser.UserName,
-            Age: appUser.Age,
-            Token: token
-        );
+        LoggedInDto loggedInDto = Mappers.ConvertAppUserToLoggedInDto(appUser, token);
 
         return loggedInDto;
     }
