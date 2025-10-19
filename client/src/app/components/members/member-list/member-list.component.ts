@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder } from '@angular/forms';
+import { MemberService } from '../../../services/member.service';
 
 @Component({
   selector: 'app-member-list',
@@ -18,6 +19,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class MemberListComponent implements OnInit {
   accountService = inject(AccountService);
+  memberService = inject(MemberService);
   members: Member[] | undefined;
 
   ngOnInit(): void {
@@ -25,7 +27,7 @@ export class MemberListComponent implements OnInit {
   }
 
   getAll(): void {
-    let allMembers$: Observable<Member[]> = this.accountService.getAll();
+    let allMembers$: Observable<Member[]> = this.memberService.getAll();
 
     allMembers$.subscribe({
       next: (res) => {
