@@ -1,26 +1,20 @@
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { AppUser } from '../models/app-user.model';
 import { Observable } from 'rxjs';
 import { Member } from '../models/member.model';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MemberService {
+export class UserService {
   http = inject(HttpClient);
   private readonly _baseApiUrl: string = environment.baseApiUrl + 'api/';
 
-  getAll(): Observable<Member[]> {
-    let response$: Observable<Member[]> =
-      this.http.get<Member[]>(this._baseApiUrl + 'member/get-all');
-
-    return response$;
-  }
-
-  getByUserName(userName: string): Observable<Member> {
+  updateById(userId: string, userInput: AppUser): Observable<Member> {
     let response$: Observable<Member> =
-      this.http.get<Member>(this._baseApiUrl + 'account/get-by-username/' + userName);
+      this.http.put<Member>(this._baseApiUrl + 'account/update/' + userId, userInput);
 
     return response$;
   }
