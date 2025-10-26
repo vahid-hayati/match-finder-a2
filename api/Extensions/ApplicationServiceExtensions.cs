@@ -38,6 +38,8 @@ public static class ApplicationServiceExtensions
         return services;
     }
 
+
+
     // public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration configuration)
     // {
     //     #region MongoDbSettings

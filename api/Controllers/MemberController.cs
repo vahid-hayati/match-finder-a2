@@ -22,14 +22,7 @@ public class MemberController(IMemberRepository memberRepository) : BaseApiContr
 
         foreach (AppUser user in appUsers)
         {
-            MemberDto memberDto = new(
-                Email: user.Email,
-                UserName: user.UserName,
-                Age: user.Age,
-                Gender: user.Gender,
-                City: user.City,
-                Country: user.Country
-            );
+            MemberDto memberDto = Mappers.ConvertAppUserToMemberDto(user);
 
             memberDtos.Add(memberDto);
         }
