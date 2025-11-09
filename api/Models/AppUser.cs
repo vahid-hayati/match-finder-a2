@@ -10,7 +10,6 @@ public record AppUser(
     string Password,
     string ConfirmPassword,
     DateOnly DateOfBirth,
-    // int Age,
     string Gender,
     string City,
     string Country
