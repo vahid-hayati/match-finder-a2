@@ -1,3 +1,5 @@
+// using api.Extensions;
+using api.Extensions;
 using api.Models;
 
 namespace api.DTOs;
@@ -9,7 +11,7 @@ public static class Mappers
         LoggedInDto loggedInDto = new LoggedInDto(
             Email: appUser.Email,
             UserName: appUser.UserName,
-            Age: appUser.Age,
+            Age: DateTimeExtensions.CalculateAge(appUser.DateOfBirth),
             Token: tokenValue
         );
 
@@ -21,7 +23,8 @@ public static class Mappers
         MemberDto memberDto = new(
             Email: appUser.Email,
             UserName: appUser.UserName,
-            Age: appUser.Age,
+            // DateOfBirth: appUser.DateOfBirth,
+            Age: DateTimeExtensions.CalculateAge(appUser.DateOfBirth),
             Gender: appUser.Gender,
             City: appUser.City,
             Country: appUser.Country
