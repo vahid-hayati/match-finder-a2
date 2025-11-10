@@ -22,7 +22,7 @@ public class MemberRepository : IMemberRepository
     public async Task<IEnumerable<AppUser>> GetAllAsync(CancellationToken cancellationToken)
     {
         IEnumerable<AppUser> appUsers = await _collection.Find
-                (new BsonDocument()).ToListAsync(cancellationToken);
+                (new BsonDocument()).ToListAsync(cancellationToken); // [] or [...]
 
         return appUsers;
     }

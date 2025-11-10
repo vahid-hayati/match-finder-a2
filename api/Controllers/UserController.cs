@@ -1,5 +1,6 @@
 using api.Controllers.Helpers;
 using api.DTOs;
+using api.Extensions;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -10,20 +11,27 @@ namespace api.Controllers;
 [Authorize]
 public class UserController(IUserRepository userRepository) : BaseApiController
 {
-    [HttpPut("update-by-id/{userId}")]
-    public async Task<ActionResult<MemberDto>> UpdateById(string userId, AppUser userInput, CancellationToken cancellationToken)
-    // public async Task<ActionResult<LoggedInDto>> UpdateById(string userId, AppUser userInput, CancellationToken cancellationToken)
+    [HttpPut("update-by-id")]
+    public async Task<ActionResult<MemberDto>> UpdateById(AppUser userInput, CancellationToken cancellationToken)
     {
+        string? userId = User.GetUserId();
+
+        if (userId is null)
+            return Unauthorized("Login again.");
+
         MemberDto? memberDto = await userRepository.UpdateByIdAsync(userId, userInput, cancellationToken);
-        // LoggedInDto? loggedInDto = await userRepository.UpdateByIdAsync(userId, userInput, cancellationToken);
 
-        // if (loggedInDto is null)
-        //     return BadRequest("Operation failed.");
-
-        // return loggedInDto;
         if (memberDto is null)
             return BadRequest("Operation failed.");
 
         return memberDto;
+    }
+
+    [HttpGet]
+    public string? ShowId()
+    {
+        string? userId = User.GetUserId();
+
+        return userId;
     }
 }

@@ -23,7 +23,6 @@ public static class Mappers
         MemberDto memberDto = new(
             Email: appUser.Email,
             UserName: appUser.UserName,
-            // DateOfBirth: appUser.DateOfBirth,
             Age: DateTimeExtensions.CalculateAge(appUser.DateOfBirth),
             Gender: appUser.Gender,
             City: appUser.City,

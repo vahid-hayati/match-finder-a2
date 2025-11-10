@@ -1,5 +1,6 @@
-using api.Controllers.Helpers;
+    using api.Controllers.Helpers;
 using api.DTOs;
+using api.Extensions;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -36,9 +37,14 @@ public class AccountController(IAccountRepository accountRepository) : BaseApiCo
     }
 
     [Authorize]
-    [HttpDelete("delete-by-id/{userId}")]
-    public async Task<ActionResult<DeleteResult>> DeleteById(string userId, CancellationToken cancellationToken)
+    [HttpDelete("delete-by-id")]
+    public async Task<ActionResult<DeleteResult>> DeleteById(CancellationToken cancellationToken)
     {
+        string? userId = User.GetUserId();
+
+        if (userId is null)
+            return Unauthorized("Please login again");
+
         DeleteResult? deleteResult = await accountRepository.DeleteByIdAsync(userId, cancellationToken);
 
         if (deleteResult is null)
@@ -46,5 +52,4 @@ public class AccountController(IAccountRepository accountRepository) : BaseApiCo
 
         return deleteResult;
     }
-
 }
