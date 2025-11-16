@@ -26,12 +26,12 @@ export class LoginComponent {
 
   //#region loginFg
   loginFg = this.fB.group({
-    userNameCtrl: ['', [Validators.required]],
+    emailCtrl: ['', [Validators.required]],
     passwordCtrl: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]]
   });
 
-  get UserNameCtrl(): FormControl {
-    return this.loginFg.get('userNameCtrl') as FormControl;
+  get EmailCtrl(): FormControl {
+    return this.loginFg.get('emailCtrl') as FormControl;
   }
 
   get PasswordCtrl(): FormControl {
@@ -41,7 +41,7 @@ export class LoginComponent {
 
   login(): void {
     let userIn: Login = {
-      userName: this.UserNameCtrl.value,
+      email: this.EmailCtrl.value,
       password: this.PasswordCtrl.value
     }
 
