@@ -69,4 +69,14 @@ public class AccountRepository : IAccountRepository
         return await _collection.DeleteOneAsync<AppUser>(doc => doc.Id == userId, cancellationToken);
     }
 
+    public async Task<LoggedInDto?> ReloadLoggedInUserAsync(string userId, string token, CancellationToken cancellationToken)
+    {
+        AppUser? appUser = await _collection.Find<AppUser>(doc =>
+            doc.Id == userId).FirstOrDefaultAsync(cancellationToken);
+
+        if (appUser is null)
+            return null;
+
+        return Mappers.ConvertAppUserToLoggedInDto(appUser, token);
+    }
 }

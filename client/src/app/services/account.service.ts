@@ -53,18 +53,27 @@ export class AccountService {
     return response$;
   }
 
+  authorizeLoggedInUser(): void {
+    this.http.get<LoggedInUser>(this._baseApiUrl + 'account').subscribe({
+      error: (err) => {
+        console.log(err.error);
+        this.logout();
+      }
+    });
+  }
+
   setCurrentUser(loggedInUser: LoggedInUser): void {
     this.loggedInUserSig.set(loggedInUser);
 
     if (isPlatformBrowser(this.platformId))
       localStorage.setItem('loggedIn', JSON.stringify(loggedInUser));
-  
+
     // this.router.navigateByUrl('/members/member-list');
   }
 
   logout(): void {
     this.loggedInUserSig.set(null);
-    
+
     if (isPlatformBrowser(this.platformId))
       localStorage.clear();
 

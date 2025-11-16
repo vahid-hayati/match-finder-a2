@@ -24,6 +24,8 @@ export class AppComponent implements OnInit {
       let loggedInUserStr: string | null = localStorage.getItem('loggedIn');
       
       if (loggedInUserStr) {
+        this.accountService.authorizeLoggedInUser();
+
         this.accountService.setCurrentUser(JSON.parse(loggedInUserStr));
       }
     }
