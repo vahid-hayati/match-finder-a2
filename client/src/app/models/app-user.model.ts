@@ -1,7 +1,7 @@
 export interface AppUser {
     email: string;
     userName: string;
-    age: number;
+    dateOfBirth: string | undefined;
     password: string;
     confirmPassword: string;
     gender: string;

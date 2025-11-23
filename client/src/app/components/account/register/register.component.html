@@ -11,11 +11,6 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label>Age</mat-label>
-            <input type="number" [formControl]="AgeCtrl" matInput>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input type="password" [formControl]="PasswordCtrl" matInput>
         </mat-form-field>
@@ -23,6 +18,14 @@
         <mat-form-field appearance="outline">
             <mat-label>Confirm Password</mat-label>
             <input type="password" [formControl]="ConfirmPasswordCtrl" matInput>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [min]="minDate" [max]="maxDate" [formControl]="DateOfBirthCtrl" [matDatepicker]="datePicker"
+                placeholder="Enter your date of birth">
+            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+            <mat-datepicker #datePicker touchUi disabled="false"></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
