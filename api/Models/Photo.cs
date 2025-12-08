@@ -7,6 +7,14 @@ public record Photo(
     bool IsMain // profile => true ELSE => false
 );
 
+/*
+    1- image-1.png => 2MB
+    2- 
+        A- image-1-165.webp => 10KB
+        B- image-1-256.webp => 20KB
+        C- image-1-enlarged.webp => 300KB
+*/
+
 /* Anahita 5678209876345120309876
 
 Folder name: 5678209876345120309876

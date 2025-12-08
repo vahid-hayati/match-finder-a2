@@ -21,21 +21,23 @@ public class AccountRepository : IAccountRepository
     }
     #endregion
 
-    public async Task<LoggedInDto?> RegisterAsync(AppUser userInput, CancellationToken cancellationToken)
+    public async Task<LoggedInDto?> RegisterAsync(RegisterDto userInput, CancellationToken cancellationToken)
     {
-        AppUser? user = await _collection.Find(doc
+        AppUser? targetAppUser = await _collection.Find(doc
                 => doc.Email == userInput.Email).FirstOrDefaultAsync(cancellationToken);
 
-        if (user is not null)
+        if (targetAppUser is not null)
         {
             return null;
         }
 
-        await _collection.InsertOneAsync(userInput, null, cancellationToken);
+        AppUser appUser = Mappers.ConvertRegisterDtoToAppUser(userInput);        
 
-        string token = _tokenService.CreateToken(userInput);
+        await _collection.InsertOneAsync(appUser, null, cancellationToken);
 
-        LoggedInDto loggedInDto = Mappers.ConvertAppUserToLoggedInDto(userInput, token);
+        string token = _tokenService.CreateToken(appUser);
+
+        LoggedInDto loggedInDto = Mappers.ConvertAppUserToLoggedInDto(appUser, token);
 
         return loggedInDto;
     }

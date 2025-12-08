@@ -1,9 +1,11 @@
+using System.Runtime.InteropServices;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace api.Models;
 
 public record AppUser(
+    [Optional]
     [property: BsonId, BsonRepresentation(BsonType.ObjectId)] string? Id, // hamishe sabet
     string Email,
     string UserName,
@@ -13,6 +15,6 @@ public record AppUser(
     string Gender,
     string City,
     string Country,
-    List<Photo> Photo
+    List<Photo> Photos
 );
 
