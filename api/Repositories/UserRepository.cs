@@ -26,6 +26,16 @@ public class UserRepository : IUserRepository
     }
     #endregion
 
+    public async Task<AppUser?> GetByIdAsync(string userId, CancellationToken cancellationToken)
+    {
+        AppUser? appUser = await _collection.Find(doc => doc.Id == userId).FirstOrDefaultAsync(cancellationToken);
+
+        if (appUser is null)
+            return null;
+
+        return appUser;
+    }
+
     public async Task<MemberDto?> UpdateByIdAsync(string userId, AppUser userInput, CancellationToken cancellationToken)
     {
         UpdateDefinition<AppUser> updateDef = Builders<AppUser>.Update
@@ -47,62 +57,69 @@ public class UserRepository : IUserRepository
 
     public async Task<Photo?> UploadPhotoAsync(IFormFile file, string userId, CancellationToken cancellationToken)
     {
-        AppUser? appUser = await _collection.Find(doc => doc.Id == userId).FirstOrDefaultAsync(cancellationToken);
+        Photo photo;
+
+        AppUser? appUser = await GetByIdAsync(userId, cancellationToken);
 
         if (appUser is null)
             return null;
 
         string[]? imageUrls = await _photoService.AddPhotoToDiskAsync(file, userId);
+        //["filePath_165_sq", "filePath_256_sq", "filePath_enlarged"] 
 
         if (imageUrls is not null)
         {
-            Photo photo = new Photo(
-            Url_165: imageUrls[0],
-            Url_256: imageUrls[1],
-            Url_enlarged: imageUrls[2],
-            IsMain: true
-            );
+            #region old sintax
+            // {
+            //     photo = Mappers.ConvertPhotoUrlsToPhoto(imageUrls, true);
+            // }
+            // else
+            // {
+            //     photo = Mappers.ConvertPhotoUrlsToPhoto(imageUrls, false);
+            // }
+            #endregion
+
+            photo = appUser.Photos.Count == 0
+                 ? Mappers.ConvertPhotoUrlsToPhoto(imageUrls, true)
+                 : Mappers.ConvertPhotoUrlsToPhoto(imageUrls, false);
 
             appUser.Photos.Add(photo);
-            /*
-                //     if (appUser.Photos.Count == 0)
-                //     {
-                //         return new Photo(
-                //     Url_165: imageUrls[0],
-                //     Url_256: imageUrls[1],
-                //     Url_enlarged: imageUrls[2],
-                //     IsMain: true
-                // );
-                //         // photo = Mappers.ConvertPhotoUrlsToPhoto(imageUrls, isMain: true);
-                //     }
-                //     else
-                //     {
-
-                //                 return new Photo(
-                //         Url_165: imageUrls[0],
-                //         Url_256: imageUrls[1],
-                //         Url_enlarged: imageUrls[2],
-                //         IsMain: true
-                //     );
-                // photo = Mappers.ConvertPhotoUrlsToPhoto(imageUrls, isMain: false);
-            */
-
-
-
-            // photo = appUser.Photos.Count == 0
-            //     ? Mappers.ConvertPhotoUrlsToPhoto(imageUrls, isMain: true)
-            //     : Mappers.ConvertPhotoUrlsToPhoto(imageUrls, isMain: false);
-
 
             UpdateDefinition<AppUser> updatedUser = Builders<AppUser>.Update
                 .Set(doc => doc.Photos, appUser.Photos);
 
             UpdateResult result = await _collection.UpdateOneAsync(doc => doc.Id == userId, updatedUser, null, cancellationToken);
 
-            return result.ModifiedCount == 1 ? photo : null;
+            // if (result.ModifiedCount == 1)
+            //     return photo;
+
+            // return null;
+
+             return result.ModifiedCount == 1 ? photo : null;
         }
 
         return null;
+    }
 
+    public string CheckAge()
+    {
+        int age = 18;
+
+        // if (age >= 18)
+        //     return "Shoma balaye 18 sal sen darid";
+        // else if (age < 18)
+        //     return "Shoma zire 18 sal sen darid";
+        // else if (age == 20)
+        //     return "Shoma 20 sal sen darid";
+        // else 
+        //     return "bye bye";
+
+        return age >= 18
+            ? "Shoma balaye 18 sal sen darid"
+            : age < 18
+            ? "Shoma zire 18 sal sen darid"
+            : age == 20
+            ? "Shoma 20 sal sen darid"
+            : "bye bye";
     }
 }

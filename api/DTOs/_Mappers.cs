@@ -51,11 +51,13 @@ public static class Mappers
 
     public static Photo ConvertPhotoUrlsToPhoto(string[] photoUrls, bool isMain)
     {
-        return new Photo(
+        Photo photo = new Photo(
             Url_165: photoUrls[0],
             Url_256: photoUrls[1],
             Url_enlarged: photoUrls[2],
             IsMain: isMain
         );
+
+        return photo;
     }
 }
