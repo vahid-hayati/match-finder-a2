@@ -1,6 +1,7 @@
 using api.Controllers.Helpers;
 using api.DTOs;
 using api.Extensions;
+using api.Extensions.Validations;
 using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -29,6 +30,7 @@ public class UserController(IUserRepository userRepository) : BaseApiController
 
     [HttpPost("add-photo")]
     public async Task<ActionResult<Photo>> AddPhoto(
+        [AllowedFileExtensions, FileSize(250_000, 4_000_000)]
         IFormFile file, CancellationToken cancellationToken
     )
     {
