@@ -1,4 +1,6 @@
 using Image_Processing_WwwRoot.Interfaces;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using SkiaSharp;
 
 namespace Image_Processing_WwwRoot.Services;

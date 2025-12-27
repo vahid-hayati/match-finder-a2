@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace Image_Processing_WwwRoot.Interfaces;
 
 public interface IPhotoModifySaveService
