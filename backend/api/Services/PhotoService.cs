@@ -1,4 +1,5 @@
 using api.Interfaces;
+using api.Models;
 using Image_Processing_WwwRoot.Helpers;
 using Image_Processing_WwwRoot.Interfaces;
 
@@ -65,5 +66,26 @@ public class PhotoService(
         }
 
         return null;
+    }
+
+    public async Task<bool> DeletePhotoFromDiskAsync(Photo photo)
+    {
+        List<string> photoPaths = [];
+
+        photoPaths.Add(photo.Url_165);
+        photoPaths.Add(photo.Url_256);
+        photoPaths.Add(photo.Url_enlarged);
+
+        foreach (string photoPath in photoPaths)
+        {
+            if (File.Exists(WwwRootUrl + photoPath))
+            {
+                await Task.Run(() => File.Delete(WwwRootUrl + photoPath));
+            }
+            else
+                return false;
+        }
+
+        return true;
     }
 }
