@@ -150,4 +150,32 @@ public class UserRepository : IUserRepository
         return await _collection.UpdateOneAsync(filterNew, updateNew, null, cancellationToken);
         #endregion
     }
+
+    public async Task<UpdateResult?> DeletePhotoAsync(string userId, string urlIn, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrEmpty(urlIn)) return null;
+
+        Photo photo = await _collection.AsQueryable()
+            .Where(appUser => appUser.Id == userId) // filter by user Id
+            .SelectMany(appUser => appUser.Photos) // flatten the Photos array
+            .Where(photo => photo.Url_165 == urlIn) // filter by photo url
+            .FirstOrDefaultAsync(cancellationToken); // return the photo or null
+
+        if (photo is null) return null;
+
+        if (photo.IsMain) return null;
+
+        bool isDeleteSuccess = await _photoService.DeletePhotoFromDiskAsync(photo);
+        if (!isDeleteSuccess)
+        {
+            _logger.LogError("Delete Photo form disk failed");
+
+            return null;
+        }
+
+        UpdateDefinition<AppUser> updateDef = Builders<AppUser>.Update
+            .PullFilter(appUser => appUser.Photos, photo => photo.Url_165 == urlIn);
+
+        return await _collection.UpdateOneAsync(appUser => appUser.Id == userId, updateDef, null, cancellationToken);
+    }
 }
