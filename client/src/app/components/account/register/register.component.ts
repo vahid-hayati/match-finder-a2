@@ -3,18 +3,20 @@ import { AccountService } from '../../../services/account.service';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoggedInUser } from '../../../models/logged-in.model';
 import { Observable, Subscription } from 'rxjs';
-import { AppUser } from '../../../models/app-user.model';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { RegisterUser } from '../../../models/register-user.model';
+import { MatRadioModule } from '@angular/material/radio';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    RouterModule, RouterLink,
+    RouterModule, MatRadioModule,
     FormsModule, ReactiveFormsModule, MatFormFieldModule,
     MatButtonModule, MatInputModule, MatDatepickerModule
   ],
@@ -28,6 +30,7 @@ export class RegisterComponent {
   userResponse: LoggedInUser | undefined | null;
   error: string | undefined;
   subscribedRegisterUser: Subscription | undefined;
+  passwordsNotMatch: boolean | undefined;
 
   minDate = new Date();
   maxDate = new Date();
@@ -44,14 +47,12 @@ export class RegisterComponent {
 
   //#region 
   registerFg = this.fB.group({
-    emailCtrl: ['', [Validators.required, Validators.email]], // formControl
-    userNameCtrl: ['', [Validators.required]],
+    genderCtrl: ['female', [Validators.required]],
+    emailCtrl: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,5})+)$/)]],
+    userNameCtrl: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(30)]],
+    passwordCtrl: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+    confirmPasswordCtrl: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
     dateOfBirthCtrl: ['', [Validators.required]],
-    passwordCtrl: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
-    confirmPasswordCtrl: ['', [Validators.required]],
-    genderCtrl: '',
-    cityCtrl: '',
-    countryCtrl: ''
   });
 
   get EmailCtrl(): FormControl {
@@ -77,15 +78,6 @@ export class RegisterComponent {
   get GenderCtrl(): FormControl {
     return this.registerFg.get('genderCtrl') as FormControl;
   }
-
-  get CityCtrl(): FormControl {
-    return this.registerFg.get('cityCtrl') as FormControl;
-  }
-
-  get CountryCtrl(): FormControl {
-    return this.registerFg.get('countryCtrl') as FormControl;
-  }
-  //#endregion
 
   getDateOnly(dob: string | null): string | undefined {
     if (!dob) return undefined;
@@ -121,28 +113,24 @@ export class RegisterComponent {
   // }
 
   register(): void {
-    let userInput: AppUser = {
-      email: this.EmailCtrl.value,
-      userName: this.UserNameCtrl.value,
-      dateOfBirth: this.getDateOnly(this.DateOfBirthCtrl.value),
-      password: this.PasswordCtrl.value,
-      confirmPassword: this.ConfirmPasswordCtrl.value,
-      gender: this.GenderCtrl.value,
-      city: this.CityCtrl.value,
-      country: this.CountryCtrl.value
-    }
+    const dob: string | undefined = this.getDateOnly(this.DateOfBirthCtrl.value);
 
-    let response$: Observable<LoggedInUser | null> = this.accountService.register(userInput);
-
-    this.subscribedRegisterUser = response$.subscribe({
-      next: (res) => {
-        console.log(res);
-        this.userResponse = res;
-      },
-      error: (err) => {
-        console.log(err.error);
-        this.error = err.error;
+    if (this.PasswordCtrl.value === this.ConfirmPasswordCtrl.value) {
+      let user: RegisterUser = {
+        email: this.EmailCtrl.value,
+        userName: this.UserNameCtrl.value,
+        password: this.PasswordCtrl.value,
+        confirmPassword: this.ConfirmPasswordCtrl.value,
+        dateOfBirth: dob,
+        gender: this.GenderCtrl.value
       }
-    });
+
+      this.subscribedRegisterUser = this.accountService.register(user).subscribe({
+        next: (res) => console.log(res),
+      })
+    }
+    else {
+      this.passwordsNotMatch = true;
+    }
   }
 }

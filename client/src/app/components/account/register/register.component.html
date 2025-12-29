@@ -1,65 +1,87 @@
-<div>
-    <form>
+<form>
+    <div class="content">
+        <h3>Create Account</h3>
+
+        <div class="gender">
+            <strong>I am a</strong>
+            <mat-radio-group [formControl]="GenderCtrl" aria-label="Select your gender" color="primary">
+                <mat-radio-button value="female">Female</mat-radio-button>
+                <mat-radio-button value="male">Male</mat-radio-button>
+                <mat-radio-button value="other">Other</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
         <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input type="email" [formControl]="EmailCtrl" matInput>
+            @if (EmailCtrl.hasError('required')) {
+            <mat-error>This field is required.</mat-error>
+            }
+            @else if (EmailCtrl.hasError('pattern')) {
+            <mat-error>Enter a valid email.</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
+            <mat-label>Username</mat-label>
             <input type="text" [formControl]="UserNameCtrl" matInput>
+            <mat-hint>Between 1 to 30 characters.</mat-hint>
+            @if (UserNameCtrl.hasError('required')) {
+            <mat-error>This field is required.</mat-error>
+            }
+            @else if (UserNameCtrl.hasError("maxlength")) {
+            <mat-error>Min 30 characters</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input type="password" [formControl]="PasswordCtrl" matInput>
+            @if (PasswordCtrl.hasError('required')) {
+            <mat-error>This field is required.</mat-error>
+            }
+            @else if (PasswordCtrl.errors && PasswordCtrl.hasError('minlength')) {
+            <mat-error>It's too short. Min: 8 is required.</mat-error>
+            }
+            @else if(PasswordCtrl.errors && PasswordCtrl.hasError('maxlength')) {
+            <mat-error>It's too long. Max: 20 characters.</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Confirm Password</mat-label>
             <input type="password" [formControl]="ConfirmPasswordCtrl" matInput>
+            @if (ConfirmPasswordCtrl.hasError('required')) {
+            <mat-error>This field is required.</mat-error>
+            }
+            @else if (ConfirmPasswordCtrl.errors && ConfirmPasswordCtrl.hasError('minlength')) {
+            <mat-error>It's too short. Min: {{ConfirmPasswordCtrl.errors['minlength'].requiredLength}} is
+                required.</mat-error>
+            }
+            @else if(ConfirmPasswordCtrl.errors && ConfirmPasswordCtrl.hasError('maxlength')) {
+            <mat-error>It's too long. Max: {{ConfirmPasswordCtrl.errors['maxlength'].requiredLength}}
+                characters.</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Date of Birth</mat-label>
-            <input matInput [min]="minDate" [max]="maxDate" [formControl]="DateOfBirthCtrl" [matDatepicker]="datePicker"
+            <input [formControl]="DateOfBirthCtrl" [min]="minDate" [max]="maxDate" matInput [matDatepicker]="dp3"
                 placeholder="Enter your date of birth">
-            <mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
-            <mat-datepicker #datePicker touchUi disabled="false"></mat-datepicker>
+            <mat-hint>Between {{minDate.getFullYear()}} to {{maxDate.getFullYear()}}</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 touchUi disabled="false"></mat-datepicker>
+            @if (DateOfBirthCtrl.hasError('required')) {
+            <mat-error>This field is required.</mat-error>
+            }
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Gender</mat-label>
-            <input type="text" [formControl]="GenderCtrl" matInput>
-        </mat-form-field>
+        <button (click)="register()" mat-flat-button color="parimary" [disabled]="registerFg.invalid">
+            Register
+        </button>
 
-        <mat-form-field appearance="outline">
-            <mat-label>City</mat-label>
-            <input type="text" [formControl]="CityCtrl" matInput>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-            <mat-label>Country</mat-label>
-            <input type="text" [formControl]="CountryCtrl" matInput>
-        </mat-form-field>
-
-        <button (click)="register()" mat-raised-button>Register</button>
-        <!-- <button (click)="login()" mat-raised-button>Login</button> -->
-    </form>
-
-    <p>
-        {{userResponse?.userName}}
-        {{userResponse?.age}}
-    </p>
-
-    <p>
-        {{error}}
-    </p>
-
-    <div class="item-2">
-        <!-- <button (click)="getAll()" mat-raised-button>Get All</button>
-        <button (click)="getByUserName()" mat-raised-button>Get By UserName</button>
-        <button (click)="updateUserById()" mat-raised-button>Update</button>
-        <button (click)="deleteUserById()" mat-raised-button color="warn">Delete</button> -->
+        @if (passwordsNotMatch) {
+        <p>Passwords don't match!</p>
+        }
     </div>
-</div>
+</form>
