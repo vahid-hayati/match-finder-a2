@@ -21,12 +21,12 @@ public class UserController(IUserRepository userRepository) : BaseApiController
         if (userId is null)
             return Unauthorized("Login again.");
 
-        MemberDto? memberDto = await userRepository.UpdateByIdAsync(userId, userInput, cancellationToken);
+        UpdateResult? result = await userRepository.UpdateByIdAsync(userId, userInput, cancellationToken);
 
-        if (memberDto is null)
+        if (result is null)
             return BadRequest("Operation failed.");
 
-        return memberDto;
+        return Ok("User has been updated successfully.");
     }
 
     [HttpPost("add-photo")]
