@@ -14,8 +14,8 @@ public static class Mappers
            Password: registerDto.Password,
            ConfirmPassword: registerDto.ConfirmPassword,
            DateOfBirth: registerDto.DateOfBirth,
-           Gender: string.Empty, // ""
-           Introduction: string.Empty,
+           Gender: registerDto.Gender, 
+           Introduction: string.Empty, // ""
            LookingFor: string.Empty,
            Interests: string.Empty,
            City: string.Empty,
