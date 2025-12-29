@@ -1,3 +1,5 @@
+using api.Models;
+
 namespace api.DTOs;
 
 public record MemberDto(
@@ -6,5 +8,6 @@ public record MemberDto(
     int Age,
     string Gender,
     string City,
-    string Country
+    string Country,
+    List<Photo> Photos
 );
