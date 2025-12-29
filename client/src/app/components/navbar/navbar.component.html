@@ -10,7 +10,12 @@
     <section class="right">
         @if (accountService.loggedInUserSig(); as user) {
         <button mat-mini-fab [mat-menu-trigger-for]="appMenu" class="menu-button">
+            @if (user.profilePhotoUrl) {
+            <img src="{{apiUrl + user.profilePhotoUrl}}" alt="">
+            }
+            @else {
             <span>{{user.userName[0] | titlecase}}</span>
+            }
         </button>
         <mat-menu class="mat-menu" #appMenu>
             <div class="user-info">
