@@ -37,23 +37,22 @@ public class UserRepository : IUserRepository
         return appUser;
     }
 
-    public async Task<MemberDto?> UpdateByIdAsync(string userId, AppUser userInput, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> UpdateByIdAsync(string userId, AppUser userInput, CancellationToken cancellationToken)
     {
         UpdateDefinition<AppUser> updateDef = Builders<AppUser>.Update
-                    .Set(user => user.Email, userInput.Email.Trim().ToLower())
-                    .Set(user => user.UserName, userInput.UserName.Trim().ToLower());
+                .Set(appUser => appUser.Introduction, userInput.Introduction.Trim())
+                .Set(appUser => appUser.LookingFor, userInput.LookingFor.Trim())
+                .Set(appUser => appUser.Interests, userInput.Interests)
+                .Set(appUser => appUser.City, userInput.City.Trim().ToLower())
+                .Set(appUser => appUser.Country, userInput.Country.Trim().ToLower());
 
-        await _collection.UpdateOneAsync(user
+        UpdateResult? result = await _collection.UpdateOneAsync(user
             => user.Id == userId, updateDef, null, cancellationToken);
 
-        AppUser appUser = await _collection.Find(user => user.Id == userId).FirstOrDefaultAsync(cancellationToken);
-
-        if (appUser is null)
+        if (!result.IsModifiedCountAvailable)
             return null;
 
-        MemberDto memberDto = Mappers.ConvertAppUserToMemberDto(appUser);
-
-        return memberDto;
+        return result;
     }
 
     public async Task<Photo?> UploadPhotoAsync(IFormFile file, string userId, CancellationToken cancellationToken)
