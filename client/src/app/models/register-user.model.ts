@@ -1,10 +1,8 @@
-export interface AppUser {
+export interface RegisterUser {
     email: string;
     userName: string;
-    dateOfBirth: string | undefined;
     password: string;
     confirmPassword: string;
+    dateOfBirth: string | undefined;
     gender: string;
-    city: string;
-    country: string;
 }
