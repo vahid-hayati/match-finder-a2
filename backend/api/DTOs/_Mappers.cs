@@ -15,6 +15,9 @@ public static class Mappers
            ConfirmPassword: registerDto.ConfirmPassword,
            DateOfBirth: registerDto.DateOfBirth,
            Gender: string.Empty, // ""
+           Introduction: string.Empty,
+           LookingFor: string.Empty,
+           Interests: string.Empty,
            City: string.Empty,
            Country: string.Empty,
            Photos: []
@@ -29,6 +32,7 @@ public static class Mappers
             Email: appUser.Email,
             UserName: appUser.UserName,
             Age: DateTimeExtensions.CalculateAge(appUser.DateOfBirth),
+            ProfilePhotoUrl: appUser.Photos.FirstOrDefault(photo => photo.IsMain)?.Url_165,
             Token: tokenValue
         );
 
@@ -43,7 +47,8 @@ public static class Mappers
             Age: DateTimeExtensions.CalculateAge(appUser.DateOfBirth),
             Gender: appUser.Gender,
             City: appUser.City,
-            Country: appUser.Country
+            Country: appUser.Country,
+            Photos: appUser.Photos
         );
 
         return memberDto;
