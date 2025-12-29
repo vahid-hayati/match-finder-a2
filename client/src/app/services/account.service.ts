@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
-import { AppUser } from '../models/app-user.model';
 import { map, Observable } from 'rxjs';
 import { LoggedInUser } from '../models/logged-in.model';
 import { Login } from '../models/login.model';
@@ -8,6 +7,7 @@ import { Member } from '../models/member.model';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { environment } from '../../environments/environment.development';
+import { RegisterUser } from '../models/register-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class AccountService {
 
   private readonly _baseApiUrl: string = environment.baseApiUrl + 'api/';
 
-  register(userInput: AppUser): Observable<LoggedInUser | null> {
+  register(userInput: RegisterUser): Observable<LoggedInUser | null> {
     let response$: Observable<LoggedInUser | null> =
       this.http.post<LoggedInUser>(this._baseApiUrl + 'account/register', userInput)
         .pipe(map(response => {
