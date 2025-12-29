@@ -1,18 +1,38 @@
-<div class="item-1">
-    <!-- <h1>Hello</h1> -->
-    <form>
+<form>
+    <div class="content">
+        <h3>Login Page</h3>
+
         <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input type="text" [formControl]="EmailCtrl" matInput>
+            <input type="email" [formControl]="EmailCtrl" matInput>
+            @if (EmailCtrl.hasError('required')) {
+            <mat-error>This field is required.</mat-error>
+            }
+            @else if (EmailCtrl.hasError('pattern')) {
+            <mat-error>Enter a valid email.</mat-error>
+            }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
             <input type="password" [formControl]="PasswordCtrl" matInput>
+            @if (PasswordCtrl.hasError('required')) {
+            <mat-error>This field is required.</mat-error>
+            }
+            @else if (PasswordCtrl.errors && PasswordCtrl.hasError('minlength')) {
+            <mat-error>
+                It's too short. Min: {{PasswordCtrl.errors['minlength'].requiredLength}} characters.
+                You've typed {{PasswordCtrl.errors['minlength'].actualLength}}.
+            </mat-error>
+            }
+            @else if(PasswordCtrl.errors && PasswordCtrl.hasError('maxlength')) {
+            <mat-error>It's too long. Max: {{PasswordCtrl.errors['maxlength'].requiredLength}}
+                characters.</mat-error>
+            }
         </mat-form-field>
 
-        <button (click)="login()" mat-raised-button [disabled]="loginFg.invalid">
+        <button (click)="login()" mat-stroked-button color="accent" [disabled]="loginFg.invalid">
             Login
-        </button>   
-    </form>
-</div>
+        </button>
+    </div>
+</form>

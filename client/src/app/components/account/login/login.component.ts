@@ -26,10 +26,10 @@ export class LoginComponent {
 
   //#region loginFg
   loginFg = this.fB.group({
-    emailCtrl: ['', [Validators.required]],
-    passwordCtrl: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]]
-  });
-
+    emailCtrl: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,5})+)$/)]],
+    passwordCtrl: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
+  })
+  
   get EmailCtrl(): FormControl {
     return this.loginFg.get('emailCtrl') as FormControl;
   }
