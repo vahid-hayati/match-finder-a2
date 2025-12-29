@@ -4,5 +4,6 @@ public record LoggedInDto(
     string Email,
     string UserName,
     int Age,
+    string? ProfilePhotoUrl,
     string Token
 );
