@@ -7,13 +7,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder } from '@angular/forms';
 import { MemberService } from '../../../services/member.service';
+import { MemberCardComponent } from "../member-card/member-card.component";
 
 @Component({
   selector: 'app-member-list',
   standalone: true,
   imports: [
-    MatButtonModule, MatCardModule, MatIconModule
-  ],
+    MatButtonModule, MatCardModule, MatIconModule,
+    MemberCardComponent
+],
   templateUrl: './member-list.component.html',
   styleUrl: './member-list.component.scss'
 })
@@ -23,7 +25,7 @@ export class MemberListComponent implements OnInit {
   members: Member[] | undefined;
 
   ngOnInit(): void {
-   this.getAll();
+    this.getAll();
   }
 
   getAll(): void {

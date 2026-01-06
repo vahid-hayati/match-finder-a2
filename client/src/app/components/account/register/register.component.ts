@@ -78,6 +78,7 @@ export class RegisterComponent {
   get GenderCtrl(): FormControl {
     return this.registerFg.get('genderCtrl') as FormControl;
   }
+  //#endregion
 
   getDateOnly(dob: string | null): string | undefined {
     if (!dob) return undefined;

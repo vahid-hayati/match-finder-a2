@@ -4,7 +4,7 @@
 
         <div class="gender">
             <strong>I am a</strong>
-            <mat-radio-group [formControl]="GenderCtrl" aria-label="Select your gender" color="primary">
+            <mat-radio-group [formControl]="GenderCtrl" aria-label="Select your gender">
                 <mat-radio-button value="female">Female</mat-radio-button>
                 <mat-radio-button value="male">Male</mat-radio-button>
                 <mat-radio-button value="other">Other</mat-radio-button>
@@ -76,7 +76,7 @@
             }
         </mat-form-field>
 
-        <button (click)="register()" mat-flat-button color="parimary" [disabled]="registerFg.invalid">
+        <button (click)="register()" mat-flat-button [disabled]="registerFg.invalid">
             Register
         </button>
 

@@ -1,46 +1,10 @@
 <div class="container">
-    <h1>Find Your Beloved One!</h1>
-    <div class="members-container">
-        @for (member of members; track $index) {
-        <mat-card class="card">
-            <div class="card-img-wrapper">
-                <img src="images/member.jpg" alt="{{member.userName}}">
-                <ul class="user-icons">
-                    <li>
-                        <button mat-mini-fab>
-                            <mat-icon color="primary">person_add</mat-icon>
-                        </button>
-                    </li>
-                    <li>
-                        <button mat-mini-fab>
-                            <mat-icon color="warn">favorite</mat-icon>
-                        </button>
-                    </li>
-                    <li>
-                        <button mat-mini-fab>
-                            <mat-icon color="accent">mail</mat-icon>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-            <mat-card-header>
-                <div class="title">
-                    <mat-icon>boy</mat-icon>
-                    <!-- @if (member.gender == "male") {
-                    <mat-icon>boy</mat-icon>
-                    }
-                    @else if (member.gender == "female") {
-                    <mat-icon>woman</mat-icon>
-                    }
-                    @else {
-                    <mat-icon>diversity_2</mat-icon>
-                    } -->
-                </div>
-                <mat-card-subtitle>{{member.city}}</mat-card-subtitle>
-            </mat-card-header>
-        </mat-card>
-        }
-    </div>
+  <h1>Find Your Beloved One!</h1>
+  <div class="members-container">
+    @for (member of members; track $index) {
+      <app-member-card [memberIn]="member"/>
+    }
+  </div>
 </div>
 
 <!-- 
