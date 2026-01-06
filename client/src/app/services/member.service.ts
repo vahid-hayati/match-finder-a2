@@ -20,7 +20,7 @@ export class MemberService {
 
   getByUserName(userName: string): Observable<Member> {
     let response$: Observable<Member> =
-      this.http.get<Member>(this._baseApiUrl + 'account/get-by-username/' + userName);
+      this.http.get<Member>(this._baseApiUrl + 'member/get-by-username/' + userName);
 
     return response$;
   }

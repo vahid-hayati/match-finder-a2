@@ -20,6 +20,12 @@
         <mat-menu class="mat-menu" #appMenu>
             <div class="user-info">
                 <div class="profile-info">
+                    <!-- @if (user.profilePhotoUrl) {
+                    <img src="{{apiUrl + user.profilePhotoUrl}}" alt="">
+                    }
+                    @else {
+                    <span>{{user.userName[0] | titlecase}}</span>
+                    } -->
                     <img src="/images/member.jpg" alt="{{user.userName[0]}}">
                 </div>
                 <div>
@@ -30,7 +36,7 @@
             <mat-divider></mat-divider>
             <mat-list>
                 <mat-list-item>
-                    <div class="menu-items">
+                    <div class="menu-items" routerLink="/user-edit">
                         <mat-icon>edit_note</mat-icon>
                         Edit Profile
                     </div>
