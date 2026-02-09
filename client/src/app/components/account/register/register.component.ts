@@ -128,6 +128,9 @@ export class RegisterComponent {
 
       this.subscribedRegisterUser = this.accountService.register(user).subscribe({
         next: (res) => console.log(res),
+        error: (err) => console.log(err)
+        
+        
       })
     }
     else {

@@ -1,20 +1,45 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Member } from '../models/member.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
+import { UserUpdate } from '../models/user-update.model';
+import { ApiResponse } from '../models/api-response.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  http = inject(HttpClient);
+  private _http = inject(HttpClient);
   private readonly _baseApiUrl: string = environment.baseApiUrl + 'api/';
 
-  // updateById(userId: string, userInput: AppUser): Observable<Member> {
-  //   let response$: Observable<Member> =
-  //     this.http.put<Member>(this._baseApiUrl + 'account/update/' + userId, userInput);
+  updateUser(userInput: UserUpdate): Observable<ApiResponse> {
+    return this._http.put<ApiResponse>(this._baseApiUrl + 'user/update-by-id', userInput);
+  }
 
-  //   return response$;
-  // }
+  setMainPhoto(url_165: string): Observable<ApiResponse> {
+    let queryParams = new HttpParams().set('photoUrlIn', url_165);
+
+    return this._http.put<ApiResponse>(this._baseApiUrl + 'user/set-main-photo/', null, {
+      params: queryParams
+    });
+  }
+
+  deletePhoto(url_165: string): Observable<ApiResponse> {
+    let queryParams = new HttpParams().set('photoUrlIn', url_165);
+
+    return this._http.put<ApiResponse>(this._baseApiUrl + 'user/delete-photo', null, {
+      params: queryParams
+    });
+  }
 }
+
+/*
+deletePhoto(url_165: string): Observable<ApiResponse> {
+    let queryParams = new HttpParams().set('photoUrlIn', url_165);
+
+    return this._http.put<ApiResponse>(this._apiUrl + 'delete-photo', null, {
+      params: queryParams
+    });
+  }
+*/
