@@ -37,7 +37,7 @@ public class UserRepository : IUserRepository
         return appUser;
     }
 
-    public async Task<UpdateResult?> UpdateByIdAsync(string userId, AppUser userInput, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> UpdateByIdAsync(string userId, UserUpdateDto userInput, CancellationToken cancellationToken)
     {
         UpdateDefinition<AppUser> updateDef = Builders<AppUser>.Update
                 .Set(appUser => appUser.Introduction, userInput.Introduction.Trim())
@@ -150,14 +150,14 @@ public class UserRepository : IUserRepository
         #endregion
     }
 
-    public async Task<UpdateResult?> DeletePhotoAsync(string userId, string urlIn, CancellationToken cancellationToken)
+    public async Task<UpdateResult?> DeletePhotoAsync(string userId, string url_165_In, CancellationToken cancellationToken)
     {
-        if (string.IsNullOrEmpty(urlIn)) return null;
+        if (string.IsNullOrEmpty(url_165_In)) return null;
 
         Photo photo = await _collection.AsQueryable()
             .Where(appUser => appUser.Id == userId) // filter by user Id
             .SelectMany(appUser => appUser.Photos) // flatten the Photos array
-            .Where(photo => photo.Url_165 == urlIn) // filter by photo url
+            .Where(photo => photo.Url_165 == url_165_In) // filter by photo url
             .FirstOrDefaultAsync(cancellationToken); // return the photo or null
 
         if (photo is null) return null;
@@ -165,6 +165,7 @@ public class UserRepository : IUserRepository
         if (photo.IsMain) return null;
 
         bool isDeleteSuccess = await _photoService.DeletePhotoFromDiskAsync(photo);
+
         if (!isDeleteSuccess)
         {
             _logger.LogError("Delete Photo form disk failed");
@@ -173,7 +174,7 @@ public class UserRepository : IUserRepository
         }
 
         UpdateDefinition<AppUser> updateDef = Builders<AppUser>.Update
-            .PullFilter(appUser => appUser.Photos, photo => photo.Url_165 == urlIn);
+            .PullFilter(appUser => appUser.Photos, photo => photo.Url_165 == url_165_In);
 
         return await _collection.UpdateOneAsync(appUser => appUser.Id == userId, updateDef, null, cancellationToken);
     }

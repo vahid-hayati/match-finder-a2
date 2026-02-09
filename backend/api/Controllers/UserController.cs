@@ -14,7 +14,7 @@ namespace api.Controllers;
 public class UserController(IUserRepository userRepository) : BaseApiController
 {
     [HttpPut("update-by-id")]
-    public async Task<ActionResult<MemberDto>> UpdateById(AppUser userInput, CancellationToken cancellationToken)
+    public async Task<ActionResult<Response>> UpdateById(UserUpdateDto userInput, CancellationToken cancellationToken)
     {
         string? userId = User.GetUserId();
 
@@ -26,7 +26,11 @@ public class UserController(IUserRepository userRepository) : BaseApiController
         if (result is null)
             return BadRequest("Operation failed.");
 
-        return Ok("User has been updated successfully.");
+        Response res = new Response(
+            Message: "User has been updated successfully."
+        );
+
+        return Ok(res);
     }
 
     [HttpPost("add-photo")]
@@ -49,8 +53,8 @@ public class UserController(IUserRepository userRepository) : BaseApiController
         return photo is null ? BadRequest("Add photo failed. See logger") : photo;
     }
 
-    [HttpPut("set-main-photo")]
-    public async Task<ActionResult> SetMainPhoto(string photoUrlIn, CancellationToken cancellationToken)
+    [HttpPut("set-main-photo")] 
+    public async Task<ActionResult<Response>> SetMainPhoto(string photoUrlIn, CancellationToken cancellationToken)
     {
         string? userId = User.GetUserId();
 
@@ -61,13 +65,19 @@ public class UserController(IUserRepository userRepository) : BaseApiController
 
         UpdateResult? updateResult = await userRepository.SetMainPhotoAsync(userId, photoUrlIn, cancellationToken);
 
+        // Response response = new Response(
+        //     Message: "Set this photo as main succeeded."
+        // );
+
         return updateResult is null || !updateResult.IsModifiedCountAvailable
             ? BadRequest("Set as main photo failed. Try again in a few moments. If the issue persists contact the admin.")
-            : Ok("Set this photo as main succeeded.");
+            : Ok(new Response(
+                Message: "Set this photo as main succeeded."
+            ));
     }
 
     [HttpPut("delete-photo")]
-    public async Task<ActionResult> DeletePhoto(string photoUrlIn, CancellationToken cancellationToken)
+    public async Task<ActionResult<Response>> DeletePhoto(string photoUrlIn, CancellationToken cancellationToken)
     {
         string? userId = User.GetUserId();
 
@@ -78,7 +88,9 @@ public class UserController(IUserRepository userRepository) : BaseApiController
 
         return result is null || !result.IsModifiedCountAvailable
             ? BadRequest("Photo deletion failed. Try again in a few moments. If the issue persists contact the admin.")
-            : Ok("Photo deleted successfully.");
+            : Ok(new Response(
+                Message: "Photo deleted successfully."
+            ));
     }
 
     // [HttpGet]
