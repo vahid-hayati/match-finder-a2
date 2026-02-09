@@ -30,7 +30,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input('memberIn') memberIn: Member | undefined;
-  
+
   private _accountService = inject(AccountService);
   private _userService = inject(UserService);
   private _snackBar = inject(MatSnackBar);
@@ -109,7 +109,36 @@ export class PhotoEditorComponent implements OnInit {
             horizontalPosition: 'center',
             verticalPosition: 'top',
             duration: 5000
-          }); 
+          });
+        }
+      }
+    });
+  }
+
+  // numbers: number[] = [1, 2, 3, 4, 5, 6];
+
+  // showNumberList(): void {
+  //   console.log(this.numbers);
+  // }
+
+  // removeItemList(): void {
+  //   // this.numbers.pop();
+  //   this.numbers.splice(1, 1);
+
+  //   console.log(this.numbers);
+  // }
+
+  deletePhotoComp(url_165: string, index: number): void {
+    this._userService.deletePhoto(url_165).subscribe({
+      next: (res: ApiResponse) => {
+        if (res && this.memberIn) {
+          this.memberIn.photos.splice(index, 1);
+
+          this._snackBar.open(res.message, 'Close', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 5000
+          })
         }
       }
     });

@@ -7,13 +7,18 @@
             }
         </div> -->
         <div class="gallery">
+            <!-- <button mat-raised-button (click)="showNumberList()">Show Number List</button> -->
+            <!-- <button mat-raised-button (click)="removeItemList()">Splice</button> -->
             @for (photo of memberIn.photos; track $index) {
             <div class="photos">
                 <img src="{{apiUrl + photo.url_165}}" width="165" height="165" alt="{{memberIn.userName}} photo">
 
                 <div class="buttons">
-                    <button (click)="setMainPhotoCom(photo.url_165)" mat-stroked-button color="primary"
-                        [disabled]="photo.isMain">Set profile
+                    <button (click)="setMainPhotoCom(photo.url_165)" mat-stroked-button [disabled]="photo.isMain">
+                        Set profile
+                    </button>
+                    <button (click)="deletePhotoComp(photo.url_165, $index)" mat-mini-fab [disabled]="photo.isMain">
+                        <mat-icon>delete</mat-icon>
                     </button>
                 </div>
             </div>

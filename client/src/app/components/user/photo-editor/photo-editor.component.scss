@@ -19,12 +19,12 @@ main {
                 img {
                     border-radius: 5%;
                 }
-            }
-
-            .buttons {
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
+                
+                .buttons {
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+                }
             }
 
             @mixin uploaderMixin {

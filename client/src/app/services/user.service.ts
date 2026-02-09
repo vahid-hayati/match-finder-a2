@@ -33,13 +33,3 @@ export class UserService {
     });
   }
 }
-
-/*
-deletePhoto(url_165: string): Observable<ApiResponse> {
-    let queryParams = new HttpParams().set('photoUrlIn', url_165);
-
-    return this._http.put<ApiResponse>(this._apiUrl + 'delete-photo', null, {
-      params: queryParams
-    });
-  }
-*/
