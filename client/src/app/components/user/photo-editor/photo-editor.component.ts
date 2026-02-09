@@ -4,15 +4,18 @@ import { FileUploader, FileUploadModule } from 'ng2-file-upload';
 // npm install @ng2-file-upload --legacy-peer-deps
 
 import { AccountService } from '../../../services/account.service';
+import { UserService } from '../../../services/user.service';
 import { environment } from '../../../../environments/environment.development';
 
 import { Photo } from '../../../models/photo.model';
 import { Member } from '../../../models/member.model';
 import { LoggedInUser } from '../../../models/logged-in.model';
+import { ApiResponse } from '../../../models/api-response.model';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-photo-editor',
@@ -29,6 +32,8 @@ export class PhotoEditorComponent implements OnInit {
   @Input('memberIn') memberIn: Member | undefined;
   
   private _accountService = inject(AccountService);
+  private _userService = inject(UserService);
+  private _snackBar = inject(MatSnackBar);
 
   uploader: FileUploader | undefined;
   loggedInUser: LoggedInUser | null | undefined;
@@ -81,5 +86,32 @@ export class PhotoEditorComponent implements OnInit {
 
       this._accountService.setCurrentUser(this.loggedInUser);
     }
+  }
+
+  setMainPhotoCom(url_165: string): void {
+    this._userService.setMainPhoto(url_165).subscribe({
+      next: (res: ApiResponse) => {
+        if (res && this.memberIn) {
+          for (const photo of this.memberIn.photos) {
+            if (photo.isMain === true)
+              photo.isMain = false;
+
+            if (photo.url_165 === url_165)
+              photo.isMain = true;
+
+            if (this.loggedInUser) {
+              this.loggedInUser.profilePhotoUrl = url_165;
+              this._accountService.setCurrentUser(this.loggedInUser)
+            }
+          }
+
+          this._snackBar.open(res.message, 'close', {
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            duration: 5000
+          }); 
+        }
+      }
+    });
   }
 }

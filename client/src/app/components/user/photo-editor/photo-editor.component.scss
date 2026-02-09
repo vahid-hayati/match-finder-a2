@@ -21,6 +21,12 @@ main {
                 }
             }
 
+            .buttons {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+            }
+
             @mixin uploaderMixin {
                 min-width: 200px;
 
@@ -68,20 +74,20 @@ main {
             }
         }
 
-            .process {
-                margin-top: 1rem;
+        .process {
+            margin-top: 1rem;
 
-                .progress-bar {
-                    height: 1rem;
-                    background-color: #673ab7;
-                    max-width: 100%;
-                }
-
-                .buttons {
-                    margin-top: 0.5rem;
-                    display: flex;
-                    gap: 1rem;
-                }
+            .progress-bar {
+                height: 1rem;
+                background-color: #673ab7;
+                max-width: 100%;
             }
+
+            .buttons {
+                margin-top: 0.5rem;
+                display: flex;
+                gap: 1rem;
+            }
+        }
     }
 }

@@ -10,6 +10,12 @@
             @for (photo of memberIn.photos; track $index) {
             <div class="photos">
                 <img src="{{apiUrl + photo.url_165}}" width="165" height="165" alt="{{memberIn.userName}} photo">
+
+                <div class="buttons">
+                    <button (click)="setMainPhotoCom(photo.url_165)" mat-stroked-button color="primary"
+                        [disabled]="photo.isMain">Set profile
+                    </button>
+                </div>
             </div>
             }
 
