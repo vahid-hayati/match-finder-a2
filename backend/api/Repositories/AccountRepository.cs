@@ -81,4 +81,14 @@ public class AccountRepository : IAccountRepository
 
         return Mappers.ConvertAppUserToLoggedInDto(appUser, token);
     }
+
+    public async Task<UpdateResult?> UpdateLastActive(string userId, CancellationToken cancellationToken)
+    {
+        if (userId is null) return null;
+
+        UpdateDefinition<AppUser> updateUserLastActive = Builders<AppUser>.Update
+            .Set(appUser => appUser.LastActive, DateTime.UtcNow);
+
+        return await _collection.UpdateOneAsync(doc => doc.Id == userId, updateUserLastActive, null, cancellationToken);
+    }
 }
