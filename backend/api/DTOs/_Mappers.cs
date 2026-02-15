@@ -20,6 +20,7 @@ public static class Mappers
            Interests: string.Empty,
            City: string.Empty,
            Country: string.Empty,
+           LastActive: DateTime.UtcNow,
            Photos: []
        );
 

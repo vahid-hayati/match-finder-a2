@@ -18,6 +18,7 @@ public record AppUser(
     string Interests,
     string City,
     string Country,
+    DateTime LastActive,
     List<Photo> Photos
 );
 
