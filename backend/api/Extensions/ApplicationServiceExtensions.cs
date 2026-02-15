@@ -1,3 +1,4 @@
+using api.Helpers;
 using api.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -34,6 +35,13 @@ public static class ApplicationServiceExtensions
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
             });
         #endregion Cors
+
+        #region Other
+
+        services.AddScoped<LogUserActivity>(); // monitor/log userActivity
+
+        #endregion Other
+
 
         return services;
     }
